@@ -15,7 +15,9 @@ export default class Admin extends React.Component {
                 <Col span={20} className="main">
                     <Header></Header>
                     <Row className="content">
-                        <Home />
+                        {/* <Home /> */}
+                        {/* 动态展示子组件的内容 */}
+                        {this.props.children}
                     </Row>
                     <Footer></Footer>
                 </Col>
