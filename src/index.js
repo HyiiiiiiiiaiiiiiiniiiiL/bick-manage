@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-import Admin from "./pages/demo/router-demo/router02/Router"
+import Admin from "./pages/demo/router-demo/router03/Router"
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Admin />, document.getElementById('root'));
