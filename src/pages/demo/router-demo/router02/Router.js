@@ -10,7 +10,11 @@ export default class IRoute extends React.Component {
             <div>
                 <Router>
                     <Home>
-                        <Route path="/main" component={Main}></Route>
+                        <Route path="/" render={() =>
+                            <Main>
+                                <Route path="/main/a" component={About} />
+                            </Main>
+                        }></Route>
                         <Route path="/about" component={About} />
                         <Route path="/topic" component={Topic} />
                     </Home>

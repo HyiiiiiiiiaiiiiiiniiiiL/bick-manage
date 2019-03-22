@@ -1,8 +1,5 @@
 import React from 'react'
-import { HashRouter, Route, Link, Switch } from "react-router-dom"
-import Main from "./Main"
-import About from "./About"
-import Topic from "./Topic"
+import { HashRouter, Link } from "react-router-dom"
 
 
 export default class Home extends React.Component {
@@ -16,11 +13,7 @@ export default class Home extends React.Component {
                         <li><Link to="/topic">Topic</Link></li>
                     </ul>
                     <hr />
-                    <Switch>
-                        <Route exact={true} path="/" component={Main} />
-                        <Route path="/about" component={About} />
-                        <Route path="/topic" component={Topic} />
-                    </Switch>
+                    {this.props.children}
                 </div>
             </HashRouter>
         )
