@@ -42,13 +42,13 @@ export default class Buttons extends React.Component {
                     <Button shape="circle" loading={this.state.loading}></Button>
                     <Button type="primary" onClick={this.handleCloseLoading}>关闭</Button>
                 </Card>
-                <Card title="按钮组">
+                <Card title="按钮组" className="card-wrap">
                     <Button.Group>
                         <Button type="primary" icon="left">返回</Button>
                         <Button type="primary" icon="right">前进</Button>
                     </Button.Group>
                 </Card>
-                <Card title="按钮尺寸">
+                <Card title="按钮尺寸" className="card-wrap">
                     <Radio.Group value={this.state.size} onChange={this.handleChangeSize}>
                         <Radio value="small">小</Radio>
                         <Radio value="default">中</Radio>
