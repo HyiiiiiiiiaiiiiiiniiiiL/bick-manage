@@ -8,6 +8,7 @@ import Modals from './pages/ui/modals'
 import Loading from './pages/ui/loadings'
 import Notice from './pages/ui/notice'
 import Message from './pages/ui/message'
+import Gallery from './pages/ui/gallery'
 import Tabs from './pages/ui/tabs'
 import NoMatch from "./pages/nomatch"
 export default class Router extends React.Component {
@@ -27,6 +28,7 @@ export default class Router extends React.Component {
                                 <Route path="/admin/ui/notice" component={Notice} />
                                 <Route path="/admin/ui/message" component={Message} />
                                 <Route path="/admin/ui/tabs" component={Tabs} />
+                                <Route path="/admin/ui/gallery" component={Gallery} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
