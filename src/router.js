@@ -7,7 +7,8 @@ import Buttons from './pages/ui/buttons'
 import Modals from './pages/ui/modals'
 import Loading from './pages/ui/loadings'
 import Notice from './pages/ui/notice'
-import Message from './pages/ui/Message'
+import Message from './pages/ui/message'
+import Tabs from './pages/ui/tabs'
 import NoMatch from "./pages/nomatch"
 export default class Router extends React.Component {
     render() {
@@ -25,6 +26,7 @@ export default class Router extends React.Component {
                                 <Route path="/admin/ui/loadings" component={Loading} />
                                 <Route path="/admin/ui/notice" component={Notice} />
                                 <Route path="/admin/ui/message" component={Message} />
+                                <Route path="/admin/ui/tabs" component={Tabs} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
