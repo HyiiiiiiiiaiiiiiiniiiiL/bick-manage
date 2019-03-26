@@ -11,6 +11,7 @@ import Message from './pages/ui/message'
 import Gallery from './pages/ui/gallery'
 import Carousels from './pages/ui/carousel'
 import FormLogin from "./pages/form/login"
+import FormRegister from "./pages/form/register"
 import Tabs from './pages/ui/tabs'
 import NoMatch from "./pages/nomatch"
 export default class Router extends React.Component {
@@ -33,6 +34,7 @@ export default class Router extends React.Component {
                                 <Route path="/admin/ui/gallery" component={Gallery} />
                                 <Route path="/admin/ui/carousel" component={Carousels} />
                                 <Route path="/admin/form/login" component={FormLogin} />
+                                <Route path="/admin/form/reg" component={FormRegister} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
