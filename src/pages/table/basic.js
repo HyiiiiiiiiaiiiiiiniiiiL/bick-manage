@@ -1,31 +1,46 @@
 import React from 'react'
-import { Card, Table, Modal } from "antd"
+import { Card, Table, Modal, Button, message } from "antd"
 import axios from "./../../axios"
-import { Record } from 'immutable';
+import Utils from '../../Utils/utils';
 
 export default class BasicTable extends React.Component {
     state = {
         dataSource2: []
     }
+    params = {
+        page: 1
+    }
     request = () => {
+        let _this = this
         axios.ajax({
             url: '/table/list',
             data: {
                 params: {
-                    page: 1
+                    page: this.params.page
+                    // 为什么不把page数据放在state中?
+                    //因为state数据用来渲染html结构，只改变页码不需要渲染页面结构
+                    //render执行一定是要调用setState
                 }
             }
         }).then((res) => {
             if (res.code === 0) {
-                res.result.map((item, index) => {
+                res.result.list.map((item, index) => {
                     item.key = index
                 })
                 this.setState({
-                    dataSource2: res.result
+                    dataSource2: res.result.list,
+                    selectedRowKeys: [],
+                    selectedRows: null,
+                    pagination: Utils.pagination(res, (current) => {
+                        _this.params.page = current
+                        this.request()
+                    })
                 })
             }
         })
     }
+
+
     componentDidMount() {
         const dataSource = [
             {
@@ -76,6 +91,21 @@ export default class BasicTable extends React.Component {
             selectedItem: record
         })
     }
+    handleDelete = () => {
+        let rows = this.state.selectedRows
+        let ids = []
+        rows.map((item) => {
+            ids.push(item.id)
+        })
+        Modal.confirm({
+            title: '删除提示',
+            content: `确定要删除这些数据吗?${ids.join('、')}`,
+            onOk: () => {
+                message.success('删除成功')
+                this.request()//删除成功后，调接口刷新页面
+            }
+        })
+    }
     render() {
         const columns = [
             {
@@ -99,7 +129,10 @@ export default class BasicTable extends React.Component {
                 render(interest) {
                     let config = {
                         '1': '广场舞',
-                        "2": "蹦迪"
+                        '2': '蹦迪',
+                        '3': '卡拉',
+                        '4': '王者',
+                        "5": "绝地"
                     }
                     return config[interest]
                 }
@@ -110,8 +143,10 @@ export default class BasicTable extends React.Component {
                 render(state) {
                     let config = {
                         '1': '咸鱼',
-                        "2": '农民',
-                        "3": "垃圾"
+                        "2": '趴皮',
+                        "3": "美少女",
+                        '4': '地主',
+                        '5': '财阀'
                     }
                     return config[state]
                 }
@@ -133,6 +168,22 @@ export default class BasicTable extends React.Component {
         const rowSelection = {
             type: 'radio',
             selectedRowKeys
+
+        }
+        const rowCheckSelection = {
+            type: 'checkbox',
+            selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+                let ids = []
+                selectedRows.map((item) => {
+                    ids.push(item.id)
+                })
+                this.setState({
+                    selectedRowKeys,
+                    selectedRows
+
+                })
+            }
 
         }
         return (
@@ -167,6 +218,26 @@ export default class BasicTable extends React.Component {
                                 },//点击行
                             }
                         }}
+                    />
+                </Card>
+                <Card title="Mock-复选" style={{ margin: '10px 0' }}>
+                    <div style={{ marginBottom: 10 }}>
+                        <Button onClick={this.handleDelete}>删除</Button>
+                    </div>
+                    <Table
+                        bordered
+                        columns={columns}
+                        dataSource={this.state.dataSource2}
+                        pagination={false}
+                        rowSelection={rowCheckSelection}
+                    />
+                </Card>
+                <Card title="Mock-表格分页" style={{ margin: '10px 0' }}>
+                    <Table
+                        bordered
+                        columns={columns}
+                        dataSource={this.state.dataSource2}
+                        pagination={this.state.pagination}
                     />
                 </Card>
             </div>
