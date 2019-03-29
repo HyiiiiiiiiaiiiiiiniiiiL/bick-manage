@@ -13,6 +13,7 @@ import Carousels from './pages/ui/carousel'
 import FormLogin from "./pages/form/login"
 import FormRegister from "./pages/form/register"
 import BasicTable from "./pages/table/basic"
+import HeightTable from "./pages/table/heighTable"
 import Tabs from './pages/ui/tabs'
 import NoMatch from "./pages/nomatch"
 export default class Router extends React.Component {
@@ -37,6 +38,7 @@ export default class Router extends React.Component {
                                 <Route path="/admin/form/login" component={FormLogin} />
                                 <Route path="/admin/form/reg" component={FormRegister} />
                                 <Route path="/admin/table/basic" component={BasicTable} />
+                                <Route path="/admin/table/high" component={HeightTable} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
