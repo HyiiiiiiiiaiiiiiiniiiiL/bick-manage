@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Table, Modal, Button, message } from "antd"
+import { Card, Table, Modal, Button, message,Badge} from "antd"
 import axios from "../../axios"
 import Utils from '../../Utils/utils';
 
@@ -17,7 +17,7 @@ export default class HeighTable extends React.Component {
     request = () => {
         let _this = this
         axios.ajax({
-            url: '/table/list',
+            url: '/table/heigh/list',
             data: {
                 params: {
                     page: this.params.page
@@ -36,6 +36,23 @@ export default class HeighTable extends React.Component {
                 })
             }
         })
+    }
+    handleChange=(pagination,filters,sorter)=>{
+        this.setState({
+            sortOrder:sorter.order
+        })
+    }
+    handleDelete=(item)=>{
+        let id = item.id
+        Modal.confirm({
+            title:'确认',
+            content:'确定删除该条数据吗?',
+            onOk:()=>{
+                message.success("删除成功")
+                this.request()
+            }
+        })
+
     }
     render() {
         const columns = [
@@ -231,6 +248,138 @@ export default class HeighTable extends React.Component {
                 fixed: "right"
             }
         ]
+        const columns3=[
+            {
+                title: 'id',
+                dataIndex: 'id'
+            },
+            {
+                title: '用户名',
+                dataIndex: 'userName'
+            },
+            {
+                title: '年龄',
+                dataIndex: 'age',
+                sorter:(a,b)=>{
+                    return a.age-b.age
+                },
+                sortOrder:this.state.sortOrder
+            },
+            {
+                title: '性别',
+                dataIndex: 'sex',
+                render(sex) {
+                    return sex === 1 ? '男' : '女'
+                }
+            },
+            {
+                title: '爱好',
+                dataIndex: 'interest',
+                render(interest) {
+                    let config = {
+                        '1': '广场舞',
+                        '2': '蹦迪',
+                        '3': '卡拉',
+                        '4': '王者',
+                        "5": "绝地"
+                    }
+                    return config[interest]
+                }
+            },
+            {
+                title: '状态',
+                dataIndex: 'state',
+                render(state) {
+                    let config = {
+                        '1': '咸鱼',
+                        "2": '趴皮',
+                        "3": "美少女",
+                        '4': '地主',
+                        '5': '财阀'
+                    }
+                    return config[state]
+                }
+            },
+            {
+                title: '生日',
+                dataIndex: 'birthday'
+            },
+            {
+                title: '时间',
+                dataIndex: 'time'
+            },
+            {
+                title: '地址',
+                dataIndex: 'address'
+            }
+        ]
+        const columns4=[
+            {
+                title: 'id',
+                dataIndex: 'id'
+            },
+            {
+                title: '用户名',
+                dataIndex: 'userName'
+            },
+            {
+                title: '年龄',
+                dataIndex: 'age'
+            },
+            {
+                title: '性别',
+                dataIndex: 'sex',
+                render(sex) {
+                    return sex === 1 ? '男' : '女'
+                }
+            },
+            {
+                title: '爱好',
+                dataIndex: 'interest',
+                render(interest) {
+                    let config = {
+                        '1': <Badge status="success" text='成功'/>,
+                        '2': <Badge status="error" text='报错'/>,
+                        '3': <Badge status="default" text='正常'/>,
+                        '4': <Badge status="processing" text='进行中'/>,
+                        "5": <Badge status="warning" text='警告'/>
+                    }
+                    return config[interest]
+                }
+            },
+            {
+                title: '状态',
+                dataIndex: 'state',
+                render(state) {
+                    let config = {
+                        '1': '咸鱼',
+                        "2": '趴皮',
+                        "3": "美少女",
+                        '4': '地主',
+                        '5': '财阀'
+                    }
+                    return config[state]
+                }
+            },
+            {
+                title: '生日',
+                dataIndex: 'birthday'
+            },
+            {
+                title: '时间',
+                dataIndex: 'time'
+            },
+            {
+                title: '地址',
+                dataIndex: 'address'
+            },
+            {
+                title:"操作",
+                render:(text,item)=>{
+                    return <a onClick={()=>this.handleDelete(item)}>删除</a>
+                }
+            }
+        ]
         return (
             <div>
                 <Card title="头部固定">
@@ -249,6 +398,24 @@ export default class HeighTable extends React.Component {
                         dataSource={this.state.dataSource}
                         pagination={false}
                         scroll={{ x: 1900 }}
+                    />
+                </Card>
+                <Card title="排序">
+                    <Table
+                        bordered
+                        columns={columns3}
+                        dataSource={this.state.dataSource}
+                        pagination={false}
+                        onChange={this.handleChange}
+                    />
+                </Card>
+                <Card title="操作">
+                    <Table
+                        bordered
+                        columns={columns4}
+                        dataSource={this.state.dataSource}
+                        pagination={false}
+                        onChange={this.handleChange}
                     />
                 </Card>
             </div>
